@@ -1,3 +1,5 @@
+const middleware = require("../middleware/auth.validate");
+
 module.exports = app => {
     const employee = require("../controllers/employee.controller");
   
@@ -5,7 +7,7 @@ module.exports = app => {
   
     router.get("/name", employee.getName);
   
-    router.get("/", employee.getEmployee);
+    router.get("/",[middleware.verifyToken], employee.getEmployee);
     router.get("/:id", employee.getById);    
     router.put("/:id", employee.update);
     router.delete("/:id", employee.delete);

@@ -4,6 +4,8 @@ const app = express();
 app.use(bodyParser.json());
 const PORT= 7007;
 require("./src/route/employee.route")(app);
+require("./src/route/auth.route")(app);
+
 const connectDB= require('./src/config/db.config');
 
 connectDB().then(()=>

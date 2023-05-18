@@ -4,17 +4,17 @@ const employeeCrud= generateCrudMethods(Employee);
 const ObjectId = require('mongoose').Types.ObjectId;
 
 
-exports.getName= (req,res)=>{
+exports.getName= (req,res,next)=>{
     res.json("Employee name is -> Ali")
 }
 
-exports.getEmployee= (req,res)=>{
+exports.getEmployee= (req,res,next)=>{
     employeeCrud.getAll().then((data)=>{
         res.status(200).json(data);
     }).catch(err=>res.status(400).json(err))
 }
 
-exports.getById= (req,res) =>{
+exports.getById= (req,res,next) =>{
     if(ObjectId.isValid(req.params.id)==false)
     {
         res.status(400).json({
@@ -27,7 +27,7 @@ exports.getById= (req,res) =>{
         }).catch(err=>res.status(400).json(err))
 }
 
-exports.create= (req,res)=>{
+exports.create= (req,res,next)=>{
     console.log(req.body)
     employeeCrud.create(req.body)
     .then(data=>{
@@ -37,7 +37,7 @@ exports.create= (req,res)=>{
     })
 }
 
-exports.update= (req,res) =>{
+exports.update= (req,res,next) =>{
     if(ObjectId.isValid(req.params.id)==false)
     {
         res.status(400).json({
@@ -50,7 +50,7 @@ exports.update= (req,res) =>{
         }).catch(err=>res.status(400).json(err))
 }
 
-exports.delete= (req,res) =>{
+exports.delete= (req,res,next) =>{
     if(ObjectId.isValid(req.params.id)==false)
     {
         res.status(400).json({
