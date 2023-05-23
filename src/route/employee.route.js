@@ -5,14 +5,13 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    router.get("/name", employee.getName);
   
     router.get("/",[middleware.verifyToken], employee.getEmployee);
-    router.get("/:id", employee.getById);    
-    router.put("/:id", employee.update);
-    router.delete("/:id", employee.delete);
+    router.get("/:id", [middleware.verifyToken],employee.getById);    
+    router.put("/:id", [middleware.verifyToken],employee.update);
+    router.delete("/:id", [middleware.verifyToken],employee.delete);
       
-    router.post("/", employee.create);
+    router.post("/", [middleware.verifyToken],employee.create);
 
     app.use('/api/v1/employee', router);
   };

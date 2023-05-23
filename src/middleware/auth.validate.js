@@ -11,12 +11,15 @@ verifyToken = (req, res, next) => {
     }
     AuthUser.findOne({token:token})
     .then(user=>{
-        req.userId = user.id;
+        req.userId=user.id;
         next();
+    }).catch(err=>{
+      res.status(401).json({"error":"Un-Authorize token!"})
     })      
   };
 
   const middleware = {
     verifyToken: verifyToken,
+   // validUserRole:validUserRole
   };
   module.exports = middleware;
