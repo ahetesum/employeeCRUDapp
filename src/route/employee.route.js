@@ -11,7 +11,7 @@ module.exports = app => {
     router.put("/:id", [middleware.verifyToken],employee.update);
     router.delete("/:id", [middleware.verifyToken],employee.delete);
       
-    router.post("/", [middleware.verifyToken],employee.create);
+    //router.post("/", [middleware.verifyToken],employee.create);
 
     app.use('/api/v1/employee', router);
   };
