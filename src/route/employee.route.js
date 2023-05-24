@@ -7,11 +7,13 @@ module.exports = app => {
   
   
     router.get("/",[middleware.verifyToken], employee.getEmployee);
-    router.get("/:id", [middleware.verifyToken],employee.getById);    
+    //router.get("/getById/:id", [middleware.verifyToken],employee.getById);    
     router.put("/:id", [middleware.verifyToken],employee.update);
-    router.delete("/:id", [middleware.verifyToken],employee.delete);
+    router.post("/", [middleware.verifyToken],employee.create);
       
-    //router.post("/", [middleware.verifyToken],employee.create);
+    router.delete("/:id", [middleware.verifyToken],employee.delete);
+
+    router.get("/search",[middleware.verifyToken], employee.search);
 
     app.use('/api/v1/employee', router);
   };

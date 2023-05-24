@@ -14,6 +14,34 @@ exports.getEmployee= (req,res,next)=>{
     }).catch(err=>res.status(400).json(err))
 }
 
+exports.search= (req,res,next)=>{
+
+    let searchQuery= '';
+    if(req.query.by==='firstname' )
+    {
+        searchQuery={"firstName": { $regex: '.*' + req.query.name + '.*' }};
+    }
+    else if(req.query.by==='lastname' )
+    {
+        searchQuery={
+        "lastName":{ $regex: '.*' + req.query.lastname + '.*' }      
+        };
+
+    }
+    else if(req.query.by==='designation' )
+    {
+        searchQuery={"designation":{ $regex: '.*' + req.query.designation + '.*' } 
+        };
+    }
+
+    console.log(searchQuery)
+    Employee.find(searchQuery)
+    .then(data=>{
+        res.status(200).json(data);
+    })
+
+}
+
 exports.getById= (req,res,next) =>{
     if(ObjectId.isValid(req.params.id)==false)
     {
