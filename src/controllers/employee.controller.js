@@ -9,7 +9,14 @@ exports.getName= (req,res,next)=>{
 }
 
 exports.getEmployee= (req,res,next)=>{
-    employeeCrud.getAll().then((data)=>{
+
+    console.log(req.query.limit,req.query.page);
+
+    Employee.find()
+    .limit(req.query.limit)
+    .skip(req.query.limit*req.query.page)
+    .sort({firstName:req.query.sort})
+    .then((data)=>{
         res.status(200).json(data);
     }).catch(err=>res.status(400).json(err))
 }
