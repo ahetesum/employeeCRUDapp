@@ -7,4 +7,6 @@ module.exports= mongoose.model('employee',{
     dob:{type: String},
     salary:{type: Number},
     empId:{type: String},
+    isUserApproved:{type:Boolean}
+
 });

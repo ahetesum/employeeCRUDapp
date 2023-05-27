@@ -18,8 +18,27 @@ verifyToken = (req, res, next) => {
     })      
   };
 
+isAdminRole=(req,res,next)=>{
+  AuthUser.findById(req.userId)
+  .then(user=>{
+    console.log('role',user)
+      if(user.role==="ADMIN")
+      {
+        next();
+      }
+      else{
+        return res.status(403).send({
+          message: "User is Not Admin"
+        });
+      }
+  }).catch(err=>{
+    res.status(401).json({"error":"Un-Authorize User Role!"})
+  }) 
+}
+
+
   const middleware = {
     verifyToken: verifyToken,
-   // validUserRole:validUserRole
+    isAdminRole:isAdminRole,
   };
   module.exports = middleware;

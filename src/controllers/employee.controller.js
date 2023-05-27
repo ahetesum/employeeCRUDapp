@@ -12,7 +12,7 @@ exports.getEmployee= (req,res,next)=>{
 
     console.log(req.query.limit,req.query.page);
 
-    Employee.find()
+    Employee.find({isUserApproved:true})
     .limit(req.query.limit)
     .skip(req.query.limit*req.query.page)
     .sort({firstName:req.query.sort})
