@@ -48,10 +48,16 @@ exports.approval= (req,res,next)=>{
 exports.generateOTP= (req,res,next)=>{
     console.log('generateOTP',req.params.mobile);
     Employee.findOne({ mobile: req.params.mobile}).then(data=>{
-        console.log(data);
-        res.status(200).json({"OTP":"123456"});
+        console.log(data.mobile);
+        res.status(200).json({
+            "OTP":"123456"
+        });
 
-      }).catch(err=>console.log(err))
+      }).catch(err=>
+        res.status(400).json({
+            "error":err
+        })
+        )
 }
 
 exports.generateToken= (req,res,next)=>{
