@@ -7,12 +7,19 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const crypto = require('crypto');
 
 exports.login= (req,res,next)=>{
-    console.log(req.body);
+    console.log("req.body-",req.body);
     AuthUser.findOne({ mobile: req.body.mobile}).then(data=>{
-          console.log(data);
-          res.status(200).json({"token":data.token});
+          console.log(data.mobile);
+          if(req.body && req.body.OTP==="123456")
+            res.status(200).json({"token":data.token});
+          else{
+            res.status(400).json({"err":"Inavlid OTP"});
 
-      }).catch(err=>console.log(err))
+          }
+
+      }).catch(err=>{
+        res.status(400).json({"err":"Phone Number doesnot exists"});
+      })
 }
 
 exports.register= (req,res,next) =>{
@@ -47,15 +54,15 @@ exports.approval= (req,res,next)=>{
 
 exports.generateOTP= (req,res,next)=>{
     console.log('generateOTP',req.params.mobile);
-    Employee.findOne({ mobile: req.params.mobile}).then(data=>{
-        console.log(data.mobile);
+    AuthUser.findOne({ mobile: req.params.mobile}).then(data=>{
+        console.log(" The mobile NO: "+data.mobile);
         res.status(200).json({
             "OTP":"123456"
         });
 
       }).catch(err=>
         res.status(400).json({
-            "error":err
+            "error":"Phone no doesnot Exist"
         })
         )
 }
